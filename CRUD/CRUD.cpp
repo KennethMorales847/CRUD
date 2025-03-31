@@ -84,9 +84,38 @@ public:
 
     //Eliminar un miembro del Archivo
     static void eliminarMiembro(string nombreBuscar) {
+        ifstream archivo("club.txt");
+        ofstream archivoTemp("temp.txt");
+        string n, c;
+        int e;
+        bool eliminado = false;
 
+        if (archivo.is_open() && archivoTemp.is_open()) {
+            while (archivo >> n >> e >> c) {
+                if (n == nombreBuscar) {
+                    eliminado = true;
+                }
+                else {
+                    archivoTemp << n << "" << e << "" << c << endl;
+                }
+            }
+
+            archivo.close();
+            archivoTemp.close();
+            remove("club.txt");
+            rename("temp.txt", "club.txt");
+
+            if (eliminado) {
+                cout << "Miembro eliminado exitosamente!" << endl;
+            }
+            else {
+                cout << "Miembro no encontrado." << endl;
+            }
+        }
+        else {
+            cout << "Error al abrir el archivo" << endl;
+        }
     }
-
 
 };
 
