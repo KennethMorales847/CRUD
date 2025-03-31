@@ -10,7 +10,7 @@ private:
     int edad;
     string nombre, correo;
 public:
-    MiembroClub(int _edad, string _nombre, string _correo):
+    MiembroClub(string _nombre, int _edad,  string _correo):
         edad(_edad), nombre(_nombre), correo(_correo){ }
 
     //Escribir datos en Archivo
@@ -30,7 +30,7 @@ public:
     }
 
     //Leer datos en Archivo
-    void leerDesdeArchivo() {
+    static void leerDesdeArchivo() {
         
         ifstream archivo("club.txt");
         string n, c;
@@ -39,7 +39,7 @@ public:
         if (archivo.is_open()) {
             cout << endl << "Lista de Miembros:" << endl;
             while (archivo >> n >> e >> c) {
-                cout << "Nombre: " << n << ", Edad: " << e << ", Correo: " << c << endl;
+                cout << "Nombre: " << n <<endl<< ", Edad: " << e <<endl<< ", Correo: " << c <<endl<< endl;
             }
             archivo.close();
         }
@@ -119,7 +119,54 @@ public:
 
 };
 
-int main()
-{
-    std::cout << "Hello World!\n";
+//Implementación del Menú Principal
+
+int main(){
+    int opcion;
+    string nombre, correo;
+    int edad;
+
+    do {
+        cout << endl 
+            <<"*-*-*- Menu del Club -*-*-*" << endl <<
+            "1. Agregar nuevo miembro" << endl <<
+            "2. Mostrar miembros" << endl <<
+            "3. Actualizar miembro" << endl <<
+            "4. Eliminar miembro" << endl <<
+            "5. Salir" << endl <<
+            "Seleccione una opcion: " << endl;
+        cin >> opcion;
+
+        if (opcion == 1) {
+            cout << "Ingresa el nombre: "; cin >> nombre;
+            cout << "Ingresa la edad: "; cin >> edad;
+            cout << "Ingresa el correo electronico: "; cin >> correo;
+
+            MiembroClub nuevo(nombre, edad, correo);
+            nuevo.guardarEnArchivo();
+        }
+        else  if (opcion == 2) {
+            MiembroClub::leerDesdeArchivo();
+        }
+        else  if (opcion == 3) {
+            cout << "Ingresa el nombre: "; cin >> nombre;
+            cout << "Ingresa la edad: "; cin >> edad;
+            cout << "Ingresa el correo electronico: "; cin >> correo;
+
+            MiembroClub::actualizarMiembro(nombre, edad, correo);
+        }
+        else  if (opcion == 4) {
+            cout << "Ingresa el nombre del miembro a eliminar: "; cin >> nombre;
+            MiembroClub::eliminarMiembro(nombre);
+        }
+        else  if (opcion == 5) {
+            cout << "Saliendo..." << endl;
+        }
+        else {
+            cout << "Opcion invalida. Intenta de nuevo." << endl;
+        }
+       
+    } while (opcion != 5);
+
+    return 0;
 }
