@@ -48,6 +48,7 @@ public:
         }
     }
 
+
     //Modificar información de un miembro
     static void actualizarMiembro(string nombreBuscar, int nuevaEdad, string nuevoCorreo) {
         ifstream archivo("club.txt");
@@ -55,31 +56,29 @@ public:
         string n, c;
         int e;
         bool encontrado = false;
-
         if (archivo.is_open() && archivoTemp.is_open()) {
             while (archivo >> n >> e >> c) {
                 if (n == nombreBuscar) {
-                    archivoTemp << n << "" << nuevaEdad << "" << nuevoCorreo << endl;
+                    archivoTemp << n << " " << nuevaEdad << " " << nuevoCorreo << endl;
                     encontrado = true;
                 }
                 else {
-                    archivoTemp << n << "" << e << "" << c << endl;
+                    archivoTemp << n << " " << e << " " << c << endl;
                 }
             }
             archivo.close();
             archivoTemp.close();
             remove("club.txt");
             rename("temp.txt", "club.txt");
-
             if (encontrado) {
-                cout << "Miembro actualizado exitosamente!" << endl;
+                cout << "Miembro actualizado exitosamente.\n";
             }
             else {
-                cout << "Miembro no encontrado." << endl;
+                cout << "Miembro no encontrado.\n";
             }
         }
         else {
-            cout << "Error al abrir el archivo" << endl;
+            cout << "Error al abrir el archivo.\n";
         }
     }
 
